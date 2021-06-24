@@ -45,10 +45,10 @@ class BTKbDevice():
     def init_bt_device(self):
         print("3. Configuring Device name " + BTKbDevice.MY_DEV_NAME)
         # set the device class to a keybord and set the name
-        os.system("hciconfig hci0 up")
-        os.system("hciconfig hci0 name " + BTKbDevice.MY_DEV_NAME)
+        os.system("btmgmt --index hci0 power on")
+        os.system("btmgmt --index hci0 name " + BTKbDevice.MY_DEV_NAME)
         # make the device discoverable
-        os.system("hciconfig hci0 piscan")
+        os.system("btmgmt --index hci0 connectable on && btmgmt --index hci0 discov yes")
 
     # set up a bluez profile to advertise device capabilities from a loaded service record
     def init_bluez_profile(self):
@@ -65,7 +65,7 @@ class BTKbDevice():
             "org.bluez", "/org/bluez"), "org.bluez.ProfileManager1")
         manager.RegisterProfile("/org/bluez/hci0", BTKbDevice.UUID, opts)
         print("6. Profile registered ")
-        os.system("hciconfig hci0 class 0x0025C0")
+        os.system("btmgmt --index hci0 class 5 64")
 
     # read and return an sdp record from a file
     def read_sdp_service_record(self):
