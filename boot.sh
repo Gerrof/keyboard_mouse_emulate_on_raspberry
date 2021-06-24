@@ -1,9 +1,9 @@
 #Stop the background process
-sudo hciconfig hci0 down
+sudo btmgmt --index hci0 power down
 sudo systemctl daemon-reload
-sudo /etc/init.d/bluetooth start
+sudo systemctl start bluetooth
 # Update  mac address
-./updateMac.sh
+#./updateMac.sh
 #Update Name
 ./updateName.sh ThanhLe_Keyboard_Mouse
 #Get current Path
